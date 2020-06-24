@@ -63,12 +63,8 @@ Vue.axios.interceptors.response.use(function (response) {
 }, function (error) {
   // Do something with response error
   console.log(error.response);
-  // return Promise.reject(error);
-  // if (error.response.status === 404) {
-  // window.location.href = "/not-found";
-  // } else {
   Vue.toasted.error(error.response.data).goAway(3000);
-  // }
+  return Promise.reject(error);
 }
 );
 
