@@ -70,8 +70,17 @@
               <h5 class="title">Subjects</h5>
               <p class="category">Active subjects for the current research</p>
             </template>
+
+            <b-form-input
+              size="sm"
+              v-model="filter.name"
+              type="search"
+              id="filterInput"
+              placeholder="Type to Filter by NAME, TAG or STATUS [1,2,3]"
+            ></b-form-input>
+
             <div>
-              <b-table striped hover :items="subjects" :fields="fields">
+              <b-table :filter="filter.name" striped hover :items="subjects" :fields="fields">
                 <template v-slot:cell(name)="data">
                   <router-link :to="{path:'/admin/info/' + data.item.name}">{{data.item.name}}</router-link>
                 </template>
@@ -117,7 +126,10 @@ export default {
         { key: "tags", label: "tags" },
         { key: "status", lable: "status" }
       ],
-      progress: 50
+      progress: 50,
+      filter: {
+        name: null
+      }
     };
   },
   methods: {
