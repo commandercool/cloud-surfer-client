@@ -2,17 +2,6 @@ import DashboardLayout from '../layout/DashboardLayout.vue'
 // GeneralViews
 import NotFound from '../pages/NotFoundPage.vue'
 
-// Admin pages
-import Overview from 'src/pages/Overview.vue'
-import UserProfile from 'src/pages/UserProfile.vue'
-import TableList from 'src/pages/TableList.vue'
-import Typography from 'src/pages/Typography.vue'
-import Icons from 'src/pages/Icons.vue'
-import Maps from 'src/pages/Maps.vue'
-import Notifications from 'src/pages/Notifications.vue'
-import Upgrade from 'src/pages/Upgrade.vue'
-import SubjectInfo from 'src/pages/SubjectInfo.vue'
-
 const routes = [
   {
     path: '/',
@@ -27,51 +16,52 @@ const routes = [
       {
         path: 'info/:name',
         name: 'Info',
-        component: SubjectInfo
+        component: () => import(/* webpackChunkName: "info" */ "src/pages/SubjectInfo.vue")
       },
       {
         path: 'overview',
         name: 'Overview',
-        component: Overview
+        component: () =>
+          import(/* webpackChunkName: "overview" */ "src/pages/Overview.vue")
       },
       {
         path: 'user',
         name: 'User',
-        component: UserProfile
-      },
-      {
-        path: 'table-list',
-        name: 'Table List',
-        component: TableList
-      },
-      {
-        path: 'typography',
-        name: 'Typography',
-        component: Typography
-      },
-      {
-        path: 'icons',
-        name: 'Icons',
-        component: Icons
-      },
-      {
-        path: 'maps',
-        name: 'Maps',
-        component: Maps
-      },
-      {
-        path: 'notifications',
-        name: 'Notifications',
-        component: Notifications
-      },
-      {
-        path: 'upgrade',
-        name: 'Upgrade to PRO',
-        component: Upgrade
+        component: () => import(/* webpackChunkName: "profile" */ "src/pages/UserProfile.vue")
       }
+      // {
+      //   path: 'table-list',
+      //   name: 'Table List',
+      //   component: TableList
+      // },
+      // {
+      //   path: 'typography',
+      //   name: 'Typography',
+      //   component: Typography
+      // },
+      // {
+      //   path: 'icons',
+      //   name: 'Icons',
+      //   component: Icons
+      // },
+      // {
+      //   path: 'maps',
+      //   name: 'Maps',
+      //   component: Maps
+      // },
+      // {
+      //   path: 'notifications',
+      //   name: 'Notifications',
+      //   component: Notifications
+      // },
+      // {
+      //   path: 'upgrade',
+      //   name: 'Upgrade to PRO',
+      //   component: Upgrade
+      // }
     ]
   },
-  // { path: '*', component: NotFound }
+  { path: '*', component: NotFound }
 ]
 
 /**

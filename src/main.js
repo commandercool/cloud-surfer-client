@@ -32,6 +32,10 @@ import VueAxios from "vue-axios";
 
 // router setup
 import routes from './routes/routes'
+// Toast notifications
+import Toasted from 'vue-toasted';
+
+Vue.use(Toasted)
 
 import './registerServiceWorker'
 // plugin setup
@@ -53,39 +57,38 @@ Vue.axios.interceptors.request.use(
   }
 );
 
+Vue.axios.interceptors.response.use(function (response) {
+  // Do something with response data
+  return response;
+}, function (error) {
+  // Do something with response error
+  console.log(error.response);
+  // return Promise.reject(error);
+  // if (error.response.status === 404) {
+  // window.location.href = "/not-found";
+  // } else {
+  Vue.toasted.error(error.response.data).goAway(3000);
+  // }
+}
+);
+
 // configure router
 const router = new VueRouter({
   routes, // short for routes: routes
   mode: "history",
-  linkActiveClass: 'nav-item active',
-  // scrollBehavior: (to) => {
-  //   if (to.hash) {
-  //     return { selector: to.hash }
-  //   } else {
-  //     return { x: 0, y: 0 }
-  //   }
-  // },
-  // beforeEach: (to, from, next) => {
-  //   console.log("in router handler")
-  //   if (Vue.prototype.$keycloak.authenticated) {
-  //     next()
-  //   } else {
-  //     const loginUrl = Vue.prototype.$keycloak.createLoginUrl()
-  //     window.location.replace(loginUrl)
-  //   }
-  // }
+  linkActiveClass: 'nav-item active'
 })
 
 router.beforeEach((to, from, next) => {
   console.log("in router handler")
   if (to.matched.some(record => record.meta.requiresAuth)) {
-  if (Vue.prototype.$keycloak.authenticated) {
-    next()
+    if (Vue.prototype.$keycloak.authenticated) {
+      next()
+    } else {
+      const loginUrl = Vue.prototype.$keycloak.createLoginUrl()
+      window.location.replace(loginUrl)
+    }
   } else {
-    const loginUrl = Vue.prototype.$keycloak.createLoginUrl()
-    window.location.replace(loginUrl)
-  }
-} else {
     next()
   }
 })
@@ -102,6 +105,6 @@ Vue.use(VueKeycloakJs, {
       render: h => h(App),
       router
     })
-    
+
   }
 })

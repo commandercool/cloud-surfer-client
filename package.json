@@ -5,7 +5,7 @@
   "description": "Vue light bootstrap dashboard",
   "author": "cristijora <joracristi@gmail.com>",
   "scripts": {
-    "serve": "vue-cli-service serve --open",
+    "serve": "vue-cli-service serve --open --port 8081",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "vue-cli-service serve --open",
@@ -25,6 +25,7 @@
     "vue-axios": "^2.1.5",
     "vue-keycloak": "0.0.11",
     "vue-router": "^3.0.2",
+    "vue-toasted": "^1.1.28",
     "vue2-google-maps": "^0.8.4"
   },
   "devDependencies": {
