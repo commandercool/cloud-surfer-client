@@ -100,7 +100,8 @@
             ></b-form-input>
 
             <div>
-              <b-table :filter="filter.name" striped hover :items="subjects" :fields="fields">
+              <b-table :filter="filter.name" striped hover :items="subjects" :fields="fields"
+              :busy="isLoading">
                 <template v-slot:cell(name)="data">
                   <router-link :to="{path:'/admin/info/' + data.item.name}">{{data.item.name}}</router-link>
                 </template>
@@ -119,6 +120,12 @@
                   <i v-if="data.item.status === 1" class="fa fa-refresh text-primary"></i>
                   <i v-if="data.item.status === 2" class="fa fa-check-circle text-success"></i>
                   <i v-if="data.item.status === 3" class="fa fa-times-circle text-danger"></i>
+                </template>
+
+                <template v-slot:table-busy>
+                  <div class="text-center text-danger my-2">
+                    <b-spinner class="align-middle"></b-spinner>
+                  </div>
                 </template>
               </b-table>
             </div>
@@ -152,7 +159,8 @@ export default {
       filter: {
         name: null
       },
-      file: null
+      file: null,
+      isLoading: false
     };
   },
   methods: {
