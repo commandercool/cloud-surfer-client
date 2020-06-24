@@ -17,7 +17,11 @@
               <h5 class="title">Controls</h5>
             </template>
             <b-button variant="primary" @click="runReconAll()">Run recon-all</b-button>
-            <b-button variant="outline-primary" :disabled="true" style="margin-left: 1px">Download results</b-button>
+            <b-button
+              variant="outline-primary"
+              :disabled="true"
+              style="margin-left: 1px"
+            >Download results</b-button>
           </card>
         </div>
       </div>
@@ -39,7 +43,16 @@
             <template slot="header">
               <h5 class="title">Detailed info</h5>
             </template>
-            <b-table striped hover :items="info.steps" :fields="fields">
+
+            <b-form-input
+              size="sm"
+              v-model="filter"
+              type="search"
+              id="filterInput"
+              placeholder="Type to Filter by Step NAME or STATUS [1,2,3]"
+            ></b-form-input>
+
+            <b-table striped hover :items="steps" :fields="fields" :filter="filter">
               <template v-slot:cell(status)="data">
                 <i v-if="data.item.status === 0" class="fa fa-minus-circle text-info"></i>
                 <b-spinner v-if="data.item.status === 1" small variant="primary" label="Spinning"></b-spinner>
@@ -60,6 +73,8 @@ import Vue from "vue";
 export default {
   data() {
     return {
+      filter: null,
+      steps: null,
       info: "",
       progress: 0,
       timer: "",
@@ -71,7 +86,6 @@ export default {
   },
   methods: {
     fetchInfo: function() {
-      console.log(this.$keycloak.token);
       this.$http({
         method: "get",
         url: "http://localhost:8080/subject/v1/info",
@@ -82,6 +96,7 @@ export default {
         .then(response => response.data)
         .then(data => {
           this.info = data;
+          this.steps = data.steps;
           this.progress = Math.round((data.progress / data.steps.length) * 100);
         });
     },
@@ -93,18 +108,17 @@ export default {
           subj: this.$route.params.name
         }
       }).then(() => {
-        // Vue.$toast.info("Started recon-all");
         this.fetchInfo();
         Vue.toasted.show("Recon-all started").goAway(3000);
       });
-      // .catch(error => {
-      // Vue.$toast.error("Error fetching subjects: " + error);
-      // });
     }
   },
   mounted() {
     this.fetchInfo();
-    // this.timer = window.setInterval(this.fetchInfo, 10000);
+    this.timer = window.setInterval(this.fetchInfo, 10000);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   }
 };
 </script>
