@@ -76,7 +76,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log("in router handler")
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (Vue.prototype.$keycloak.authenticated) {
       next()
@@ -87,6 +86,7 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+  window.scrollTo(0, 0)
 })
 
 Vue.use(VueKeycloakJs, {

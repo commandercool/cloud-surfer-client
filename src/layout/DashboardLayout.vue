@@ -10,10 +10,10 @@
         <i class="nc-icon nc-circle-09"></i>
         <p>User Profile</p>
       </sidebar-link>
-      <sidebar-link to="/admin/table-list">
+      <!-- <sidebar-link to="/admin/table-list">
         <i class="nc-icon nc-notes"></i>
         <p>Subject</p>
-      </sidebar-link>
+      </sidebar-link> -->
       <!-- <sidebar-link to="/admin/typography">
         <i class="nc-icon nc-paper-2"></i>
         <p>Typography</p>

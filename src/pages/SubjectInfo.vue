@@ -42,7 +42,7 @@
             <b-table striped hover :items="info.steps" :fields="fields">
               <template v-slot:cell(status)="data">
                 <i v-if="data.item.status === 0" class="fa fa-minus-circle text-info"></i>
-                <i v-if="data.item.status === 1" class="fa fa-refresh text-primary"></i>
+                <b-spinner v-if="data.item.status === 1" small variant="primary" label="Spinning"></b-spinner>
                 <i v-if="data.item.status === 2" class="fa fa-check-circle text-success"></i>
                 <i v-if="data.item.status === 3" class="fa fa-times-circle text-danger"></i>
               </template>
@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import Vue from "vue";
+
 export default {
   data() {
     return {
@@ -86,13 +88,14 @@ export default {
     runReconAll: function() {
       this.$http({
         method: "post",
-        url: "http://localhost:8080/container/v1/run?subj",
+        url: "http://localhost:8080/container/v1/run",
         params: {
           subj: this.$route.params.name
         }
       }).then(() => {
         // Vue.$toast.info("Started recon-all");
         this.fetchInfo();
+        Vue.toasted.show("Recon-all started").goAway(3000);
       });
       // .catch(error => {
       // Vue.$toast.error("Error fetching subjects: " + error);

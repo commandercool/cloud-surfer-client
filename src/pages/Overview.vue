@@ -117,7 +117,7 @@
 
                 <template v-slot:cell(status)="data">
                   <i v-if="data.item.status === 0" class="fa fa-minus-circle text-info"></i>
-                  <i v-if="data.item.status === 1" class="fa fa-refresh text-primary"></i>
+                  <b-spinner v-if="data.item.status === 1" small variant="primary" label="Spinning"></b-spinner>
                   <i v-if="data.item.status === 2" class="fa fa-check-circle text-success"></i>
                   <i v-if="data.item.status === 3" class="fa fa-times-circle text-danger"></i>
                 </template>
