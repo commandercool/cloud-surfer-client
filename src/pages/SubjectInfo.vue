@@ -16,7 +16,13 @@
             <template slot="header">
               <h5 class="title">Controls</h5>
             </template>
-            <b-button variant="primary" @click="runReconAll()">Run recon-all</b-button>
+            <b-button
+              :disabled="reconStarting || info.status === 1"
+              variant="primary"
+              @click="runReconAll()"
+            >
+              <b-spinner small v-if="reconStarting"></b-spinner>Run recon-all
+            </b-button>
             <b-button
               variant="outline-primary"
               :disabled="true"
@@ -75,9 +81,10 @@ export default {
     return {
       filter: null,
       steps: null,
-      info: "",
+      info: null,
       progress: 0,
       timer: "",
+      reconStarting: false,
       fields: [
         { key: "name", label: "step" },
         { key: "status", lable: "status" }
@@ -101,16 +108,21 @@ export default {
         });
     },
     runReconAll: function() {
+      this.reconStarting = true;
       this.$http({
         method: "post",
         url: "http://localhost:8080/container/v1/run",
         params: {
           subj: this.$route.params.name
         }
-      }).then(() => {
-        this.fetchInfo();
-        Vue.toasted.show("Recon-all started").goAway(3000);
-      });
+      })
+        .then(() => {
+          this.fetchInfo();
+          Vue.toasted.show("Recon-all started").goAway(3000);
+        })
+        .finally(() => {
+          this.reconStarting = false;
+        });
     }
   },
   mounted() {
