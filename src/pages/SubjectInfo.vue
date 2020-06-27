@@ -7,6 +7,30 @@
             <template slot="header">
               <h3 class="title">Subject info: {{info.name}}</h3>
             </template>
+            Tags:
+            <div v-if="tagger.mode === 'show'">
+              <b-badge
+                v-for="tag in info.tags"
+                :key="tag"
+                variant="secondary"
+                style="margin-left: 1px"
+              >{{tag}}</b-badge>
+              <i class="fa fa-pencil" style="cursor: pointer" @click="editTags()"></i>
+            </div>
+            <div v-if="tagger.mode === 'edit'">
+              <vue-tags-input
+                v-model="tagger.tag"
+                :tags="tagger.tags"
+                @tags-changed="newTags => tagger.tags = newTags"
+              ></vue-tags-input>
+              <i class="fa fa-check" style="cursor: pointer" aria-hidden="true" @click="saveTags()"></i>
+              <i
+                class="fa fa-times"
+                style="cursor: pointer"
+                @click="cancelEdit()"
+                aria-hidden="true"
+              ></i>
+            </div>
           </card>
         </div>
       </div>
@@ -75,10 +99,21 @@
 
 <script>
 import Vue from "vue";
+import VueTagsInput from "@johmun/vue-tags-input";
+import qs from "qs";
 
 export default {
+  components: {
+    VueTagsInput
+  },
   data() {
     return {
+      tagger: {
+        mode: "show",
+        tags: [],
+        oldTags: [],
+        tag: ""
+      },
       filter: null,
       steps: null,
       info: null,
@@ -92,6 +127,35 @@ export default {
     };
   },
   methods: {
+    cancelEdit: function() {
+      this.tagger.tags = this.tagger.oldTags;
+      this.tagger.mode = "show";
+    },
+    saveTags: function() {
+      var tagNames = [];
+      this.tagger.tags.forEach(e => {
+        tagNames.push(e.text);
+      });
+      this.$http({
+        method: "put",
+        url: "http://localhost:8080/subject/v1/tags",
+        params: {
+          tags: tagNames,
+          name: this.info.name
+        },
+        paramsSerializer: params => {
+          return qs.stringify(params, { indices: false });
+        }
+      })
+      .then(() => {
+        this.tagger.oldTags = this.tagger.tags;
+        this.info.tags = tagNames;
+        this.tagger.mode = "show";
+      });
+    },
+    editTags: function() {
+      this.tagger.mode = "edit";
+    },
     fetchInfo: function() {
       this.$http({
         method: "get",
@@ -104,6 +168,17 @@ export default {
         .then(data => {
           this.info = data;
           this.steps = data.steps;
+          if (this.tagger.tags.length == 0) {
+            this.info.tags.forEach(element => {
+              if (element != null) {
+                this.tagger.tags.push({
+                  text: element,
+                  tiClasses: ["ti-valid"]
+                });
+              }
+            });
+            this.tagger.oldTags = this.tagger.tags;
+          }
           this.progress = Math.round((data.progress / data.steps.length) * 100);
         });
     },

@@ -1813,6 +1813,11 @@ builtin-status-codes@^3.0.0:
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
+bulma@^0.7.2:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.5.tgz#35066c37f82c088b68f94450be758fc00a967208"
+  integrity sha512-cX98TIn0I6sKba/DhW0FBjtaDpxTelU166pf7ICXpCCuplHWyu6C9LYZmL5PEsnePIeJaiorsTEzzNk3Tsm1hw==
+
 bytes@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
@@ -8292,6 +8297,13 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.2.tgz#1fcc1495effe08a790909b46bf7b5c4cfeb6f21b"
   integrity sha512-NpznMQoe/DzMG7nJjPkJKT7FdEn9xXfnntG7POfTmqnSaza97ylaBf1luZDh4IgV+vgUoR//id5pf8Ru+Ym+0g==
 
+vue-input-tag@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/vue-input-tag/-/vue-input-tag-2.0.7.tgz#daea4db750df34a8c87605f88455dc5f64e1052b"
+  integrity sha512-MiTVXg/OQ0SEPmQRPBw77akCrANAn/MUvo8U5fXLEwwtzGAASpGSru2uBvCMakDB5zF0ZV3ynkX/V8tOfSU6qA==
+  dependencies:
+    vue "^2.5.17"
+
 vue-keycloak@0.0.11:
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/vue-keycloak/-/vue-keycloak-0.0.11.tgz#1cea108e20035976738b6bc4a23e8e09db7f51cf"
@@ -8328,6 +8340,14 @@ vue-style-loader@^4.1.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
+vue-tag-editor-set@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/vue-tag-editor-set/-/vue-tag-editor-set-1.0.5.tgz#9231cb3a19ceef67d431c2dacfe23dd998db231c"
+  integrity sha512-uTAPbw3VIH35izc5PprOWNbHKXWjI2ez3GtC6IMr5xc62aJswULUF3gh6dp2HKgoRZLekVjlimVAmhnzOA4GyQ==
+  dependencies:
+    bulma "^0.7.2"
+    vue "^2.5.11"
+
 vue-template-compiler@^2.6.6:
   version "2.6.6"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.6.6.tgz#a807acbf3d51971d3721d75ecb1b927b517c1a02"
@@ -8354,6 +8374,11 @@ vue2-google-maps@^0.8.4:
     babel-plugin-transform-runtime "^6.15.0"
     babel-runtime "^5.8.0"
     marker-clusterer-plus "^2.1.4"
+
+vue@^2.5.11, vue@^2.5.17:
+  version "2.6.11"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
+  integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
 
 vue@^2.6.6:
   version "2.6.6"
