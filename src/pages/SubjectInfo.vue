@@ -19,6 +19,7 @@
             </div>
             <div v-if="tagger.mode === 'edit'">
               <vue-tags-input
+                ref="editor"
                 v-model="tagger.tag"
                 :tags="tagger.tags"
                 @tags-changed="newTags => tagger.tags = newTags"
@@ -52,6 +53,10 @@
               :disabled="true"
               style="margin-left: 1px"
             >Download results</b-button>
+            <b-button
+              variant="danger"
+              style="margin-left: 1px"
+            >Delete</b-button>
           </card>
         </div>
       </div>
@@ -155,6 +160,10 @@ export default {
     },
     editTags: function() {
       this.tagger.mode = "edit";
+      this.$nextTick(() => {
+        console.log(this.$refs.editor.$el.children[0].children[0].children[1].children[0])
+        this.$refs.editor.$el.children[0].children[0].children[1].children[0].focus();
+        });
     },
     fetchInfo: function() {
       this.$http({
@@ -168,7 +177,7 @@ export default {
         .then(data => {
           this.info = data;
           this.steps = data.steps;
-          if (this.tagger.tags.length == 0) {
+          if (this.tagger.tags.length == 0 && this.tagger.mode == "show") {
             this.info.tags.forEach(element => {
               if (element != null) {
                 this.tagger.tags.push({
