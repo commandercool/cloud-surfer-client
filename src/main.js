@@ -90,7 +90,7 @@ router.beforeEach((to, from, next) => {
 
 Vue.use(VueKeycloakJs, {
   config: {
-    url: "http://localhost:8083/auth",
+    url: process.env.VUE_APP_KEYCLOAK_BASE + "/auth",
     clientId: "cloud-surfer",
     realm: "cloud-surfer"
   },

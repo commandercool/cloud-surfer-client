@@ -167,7 +167,7 @@ export default {
     loadSubjects: function() {
       this.isLoading = true;
       this.$http
-        .get("http://localhost:8080/mri/v1/subjects")
+        .get(process.env.VUE_APP_BACKEND_BASE + "/mri/v1/subjects")
         .then(response => response.data)
         .then(data => {
           this.subjects = data.subjects;
@@ -182,7 +182,7 @@ export default {
       bodyFormData.append("upload", this.file);
       this.$http({
         method: "post",
-        url: "http://localhost:8080/mri/v1/upload",
+        url: process.env.VUE_APP_BACKEND_BASE + "/mri/v1/upload",
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data; boundary=fuckit"

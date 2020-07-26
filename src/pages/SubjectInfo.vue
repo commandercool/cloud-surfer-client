@@ -143,7 +143,7 @@ export default {
       });
       this.$http({
         method: "put",
-        url: "http://localhost:8080/subject/v1/tags",
+        url: process.env.VUE_APP_BACKEND_BASE + "/subject/v1/tags",
         params: {
           tags: tagNames,
           name: this.info.name
@@ -168,7 +168,7 @@ export default {
     fetchInfo: function() {
       this.$http({
         method: "get",
-        url: "http://localhost:8080/subject/v1/info",
+        url: process.env.VUE_APP_BACKEND_BASE + "/subject/v1/info",
         params: {
           name: this.$route.params.name
         }
@@ -195,7 +195,7 @@ export default {
       this.reconStarting = true;
       this.$http({
         method: "post",
-        url: "http://localhost:8080/container/v1/run",
+        url: process.env.VUE_APP_BACKEND_BASE + "/container/v1/run",
         params: {
           subj: this.$route.params.name
         }

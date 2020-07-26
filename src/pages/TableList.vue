@@ -118,7 +118,7 @@ export default {
       console.log(this.$keycloak.token);
       this.$http({
         method: "get",
-        url: "http://localhost:8080/subject/v1/info",
+        url: process.env.VUE_APP_BACKEND_BASE + "/subject/v1/info",
         params: {
           name: "ashurova"
         }
