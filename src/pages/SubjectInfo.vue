@@ -50,9 +50,10 @@
             </b-button>
             <b-button
               variant="outline-primary"
-              :disabled="true"
+              :disabled="info.status != 2"
               style="margin-left: 1px"
-            >Download results</b-button>
+              @click="downloadAseg()"
+            >Download aseg stats</b-button>
             <b-button
               variant="danger"
               style="margin-left: 1px"
@@ -122,6 +123,7 @@ export default {
       filter: null,
       steps: null,
       info: null,
+      asegUrl: "",
       progress: 0,
       timer: "",
       reconStarting: false,
@@ -177,6 +179,7 @@ export default {
         .then(data => {
           this.info = data;
           this.steps = data.steps;
+          this.asegUrl = process.env.VUE_APP_BACKEND_BASE + '/mri/v1/download/aseg?name=' + this.info.name;
           if (this.tagger.tags.length == 0 && this.tagger.mode == "show") {
             this.info.tags.forEach(element => {
               if (element != null) {
@@ -206,6 +209,22 @@ export default {
         })
         .finally(() => {
           this.reconStarting = false;
+        });
+    },
+    downloadAseg: function() {
+      this.$http({
+        method: "get",
+        url: process.env.VUE_APP_BACKEND_BASE + "/mri/v1/download/aseg",
+        params: {
+          name: this.$route.params.name
+        }
+      })
+        .then((response) => {
+          const blob = new Blob([response.data], { type: 'text/plain' })
+          const link = document.createElement('a')
+          link.href = URL.createObjectURL(blob)
+          link.click()
+          URL.revokeObjectURL(link.href)
         });
     }
   },

@@ -85,7 +85,8 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
-  window.scrollTo(0, 0)
+  // next();
+  window.scrollTo(0, 0);
 })
 
 Vue.use(VueKeycloakJs, {
@@ -103,3 +104,9 @@ Vue.use(VueKeycloakJs, {
 
   }
 })
+
+// new Vue({
+//   el: '#app',
+//   render: h => h(App),
+//   router
+// });
