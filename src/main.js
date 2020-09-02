@@ -22,6 +22,7 @@ import App from './App.vue'
 
 // Keycloak for authorization
 import VueKeycloakJs from "@dsb-norge/vue-keycloak-js";
+import '@trevoreyre/autocomplete-vue/dist/style.css'
 
 // LightBootstrap plugin
 import LightBootstrap from './light-bootstrap-main'
