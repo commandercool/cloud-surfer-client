@@ -6,6 +6,10 @@
         <i class="fa fa-tachometer"></i>
         <p>Dashboard</p>
       </sidebar-link>
+      <sidebar-link to="/admin/aseg">
+        <i class="fa fa-table"></i>
+        <p>aseg tools</p>
+      </sidebar-link>
       <sidebar-link to="/admin/user">
         <i class="nc-icon nc-circle-09"></i>
         <p>User Profile</p>

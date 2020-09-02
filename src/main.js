@@ -44,18 +44,6 @@ Vue.use(LightBootstrap)
 
 Vue.use(VueAxios, axios);
 
-Vue.axios.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
-    config.headers.Authorization = `Bearer ${Vue.prototype.$keycloak.token}`;
-    return config;
-  },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
-);
-
 Vue.axios.interceptors.response.use(function (response) {
   // Do something with response data
   return response;
@@ -74,6 +62,19 @@ const router = new VueRouter({
   linkActiveClass: 'nav-item active'
 })
 
+// Auth for PROD
+Vue.axios.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    config.headers.Authorization = `Bearer ${Vue.prototype.$keycloak.token}`;
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
+
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (Vue.prototype.$keycloak.authenticated) {
@@ -85,7 +86,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
-  // next();
   window.scrollTo(0, 0);
 })
 
@@ -104,6 +104,13 @@ Vue.use(VueKeycloakJs, {
 
   }
 })
+
+// --------------------------------------------------------
+// No auth for local tests
+// router.beforeEach((to, from, next) => {
+//   next();
+//   window.scrollTo(0, 0);
+// })
 
 // new Vue({
 //   el: '#app',

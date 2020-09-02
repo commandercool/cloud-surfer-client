@@ -28,6 +28,11 @@ const routes = [
         path: 'user',
         name: 'User',
         component: () => import(/* webpackChunkName: "profile" */ "src/pages/UserProfile.vue")
+      },
+      {
+        path: 'aseg',
+        name: 'Aseg',
+        component: () => import(/* webpackChunkName: "profile" */ "src/pages/Aseg.vue")
       }
       // {
       //   path: 'table-list',
