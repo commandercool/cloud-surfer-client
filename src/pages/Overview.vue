@@ -90,10 +90,6 @@
               <h5 class="title">Subjects</h5>
               <p class="category">Active subjects for the current research</p>
             </template>
-            <b-form-group size="sm">
-              <b-form-input size="sm" v-model="tag" placeholder="Specify tag to group subjects by"></b-form-input>
-              <b-button @click="asegToTable()">Download aseg2table</b-button>
-            </b-form-group>
 
             <b-form-input
               size="sm"
@@ -201,26 +197,6 @@ export default {
         Vue.toasted.show("New subject was uploaded").goAway(3000);
         this.loadSubjects();
       });
-    },
-    asegToTable: function() {
-      this.$http({
-        method: "get",
-        url: process.env.VUE_APP_BACKEND_BASE + "/container/v1/download/aseg2table",
-        params: {
-          tag: this.tag
-        }
-      })
-      .then((response) => {
-        const blob = new Blob([response.data], { type: 'text/plain' })
-        const link = document.createElement('a')
-        link.href = URL.createObjectURL(blob)
-        link.click()
-        URL.revokeObjectURL(link.href)
-      });
-      // .then(response => {
-        // console.log(response);
-        // Vue.toasted.show("aseg2table executed successfully").goAway(3000);
-      // });
     }
   },
   mounted() {
