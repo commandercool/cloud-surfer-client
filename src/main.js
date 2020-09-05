@@ -63,6 +63,7 @@ const router = new VueRouter({
   linkActiveClass: 'nav-item active'
 })
 
+// -----------------------------
 // Auth for PROD
 Vue.axios.interceptors.request.use(
   function (config) {

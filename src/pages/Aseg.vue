@@ -18,8 +18,12 @@
 
 
             <b-button @click="preview()">Preview</b-button>
-            <b-button style="margin-left: 1px" @click="download()">Download .txt</b-button>
-            <b-button style="margin-left: 1px">Download .xls</b-button>
+            <b-button style="margin-left: 2px" @click="download()">
+              Download .txt
+            </b-button>
+            <b-button style="margin-left: 2px" @click="downloadXls()">
+              Download .xls
+            </b-button>
 
             <b-table striped hover :items="aseginfo" style="display: block; overflow-x: auto">
             </b-table>
@@ -44,6 +48,9 @@ export default {
   },
   data() {
     return {
+      env: {
+        base: process.env.VUE_APP_BACKEND_BASE
+      },
       aseginfo: [],
       tag: "",
     };
@@ -84,6 +91,7 @@ export default {
       this.$http({
         method: "get",
         url: process.env.VUE_APP_BACKEND_BASE + "/container/v1/download/aseg2table",
+        responseType: 'blob',
         params: {
           tag: this.tag
         }
@@ -91,6 +99,25 @@ export default {
       .then((response) => {
         const blob = new Blob([response.data], { type: 'text/plain' })
         const link = document.createElement('a')
+        link.setAttribute('download', this.tag)
+        link.href = URL.createObjectURL(blob)
+        link.click()
+        URL.revokeObjectURL(link.href)
+      });
+    },
+    downloadXls: function() {
+      this.$http({
+        method: "get",
+        url: process.env.VUE_APP_BACKEND_BASE + "/container/v1/download/aseg2table/xls",
+        responseType: 'blob',
+        params: {
+          tag: this.tag
+        }
+      })
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+        const link = document.createElement('a')
+        link.setAttribute('download', this.tag)
         link.href = URL.createObjectURL(blob)
         link.click()
         URL.revokeObjectURL(link.href)
